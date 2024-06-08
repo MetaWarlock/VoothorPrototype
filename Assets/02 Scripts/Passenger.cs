@@ -44,7 +44,7 @@ public class Passenger : MonoBehaviour
         if (Vector3.Distance(transform.position, destination) < 0.1f)
         {
             atExitPoint = true;
-            gameManager.PassengerExited();
+            
         }
     }
 
@@ -81,6 +81,7 @@ public class Passenger : MonoBehaviour
             if (Vector3.Distance(transform.position, helicopter.position) < 0.1f)
             {
                 // Удалите пассажира или добавьте логику посадки
+                gameManager.PassengerExited();
                 Destroy(gameObject);
             }
         }

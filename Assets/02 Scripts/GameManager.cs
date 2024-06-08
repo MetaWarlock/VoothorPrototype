@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
 
     private int passengerCount = 0;
     private const int maxPassengers = 2;
+    private Queue<Portal> portalQueue;
 
     void Start()
     {
+        portalQueue = new Queue<Portal>(portals);
         StartCoroutine(SpawnPassengers());
     }
 
@@ -22,12 +24,27 @@ public class GameManager : MonoBehaviour
         {
             if (passengerCount < maxPassengers)
             {
-                Portal randomPortal = portals[Random.Range(0, portals.Count)];
-                randomPortal.SpawnPassenger(passengerPrefab);
-                passengerCount++;
+                Portal nextPortal = GetNextPortal();
+                if (nextPortal != null)
+                {
+                    nextPortal.SpawnPassenger(passengerPrefab);
+                    passengerCount++;
+                }
             }
             yield return new WaitForSeconds(spawnInterval);
         }
+    }
+
+    Portal GetNextPortal()
+    {
+        if (portalQueue.Count == 0)
+        {
+            return null; // Нет доступных порталов
+        }
+
+        Portal nextPortal = portalQueue.Dequeue();
+        portalQueue.Enqueue(nextPortal);
+        return nextPortal;
     }
 
     public void PassengerExited()
