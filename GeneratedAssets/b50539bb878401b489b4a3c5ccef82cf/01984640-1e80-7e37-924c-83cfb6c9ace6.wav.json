@@ -1,0 +1,13 @@
+{
+    "asset": "b50539bb878401b489b4a3c5ccef82cf",
+    "fileName": "01984640-1e80-7e37-924c-83cfb6c9ace6.wav",
+    "prompt": "Helicopter sound",
+    "negativePrompt": "",
+    "model": "0ee39b33-2893-4e0f-8c46-0e0bdd4eda85",
+    "modelName": "Text to Sound",
+    "customSeed": -1,
+    "w3CTraceId": "1c813c3f4c2d0129feba0e86636b18b5",
+    "duration": 3.0,
+    "autoTrim": true,
+    "hasReference": false
+}

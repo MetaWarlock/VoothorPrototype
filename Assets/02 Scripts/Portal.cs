@@ -9,6 +9,5 @@ public class Portal : MonoBehaviour
         GameObject passenger = Instantiate(passengerPrefab, transform.position, Quaternion.identity);
         Passenger passengerScript = passenger.GetComponent<Passenger>();
         passengerScript.SetDestination(exitPoint.position);
-        passengerScript.SetGameManager(FindObjectOfType<GameManager>());
     }
 }

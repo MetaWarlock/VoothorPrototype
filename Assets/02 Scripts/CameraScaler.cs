@@ -1,8 +1,8 @@
 using UnityEngine;
 
 public class CameraScaler : MonoBehaviour
-{
-    public float targetAspect = 16f / 9f;
+{/*
+    public float targetAspect = 9f / 16f;
 
     void Start()
     {
@@ -30,5 +30,5 @@ public class CameraScaler : MonoBehaviour
             rect.y = 0;
             camera.rect = rect;
         }
-    }
+    }*/
 }

@@ -6,8 +6,8 @@ public class Helicopter : MonoBehaviour
 
     void Update()
     {
-        // �������� �� �������� ���������
-        if (Mathf.Approximately(GetComponent<Rigidbody2D>().velocity.y, 0))
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        if (Mathf.Approximately(GetComponent<Rigidbody2D>().linearVelocity.y, 0))
         {
             isOnPlatform = true;
         }

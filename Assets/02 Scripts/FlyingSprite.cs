@@ -7,36 +7,55 @@ public class FlyingSprite : MonoBehaviour
     public float acceleration = 1f;
     public float lateralAcceleration = 5f;
 
-    private Vector2 move;
+    // Public properties to access input values
+    public float VerticalInput { get; private set; }
+    public float HorizontalInput { get; private set; }
 
+    private Vector2 move;
     private Rigidbody2D rb;
     private Vector2 lateralVelocity;
+    private Vector3 originalScale;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        originalScale = transform.localScale;
     }
 
     void FixedUpdate()
     {
         HandleLateralMovement();
         HandleVerticalMovement();
+        
+        // Update input values for propellers
+        HorizontalInput = move.x;
+        VerticalInput = move.y;
+        
+        // Flip the entire player object based on horizontal movement
+        if (move.x > 0.1f && transform.localScale.x < 0)
+        {
+            transform.localScale = new Vector3(originalScale.x, transform.localScale.y, transform.localScale.z);
+        }
+        else if (move.x < -0.1f && transform.localScale.x > 0)
+        {
+            transform.localScale = new Vector3(-originalScale.x, transform.localScale.y, transform.localScale.z);
+        }
     }
 
     private void HandleVerticalMovement()
     {
         if (move.y > 0.01)
         {
-            // Увеличиваем вертикальную скорость до максимума с учетом ускорения
-            if (rb.velocity.y < maxSpeed)
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            if (rb.linearVelocity.y < maxSpeed)
             {
-                rb.velocity += Vector2.up * acceleration * Time.deltaTime;
+                rb.linearVelocity += Vector2.up * acceleration * Time.deltaTime;
             }
         }
         else if (move.y < -0.01)
         {
-            // Ускоряем падение
-            rb.velocity += Vector2.down * acceleration * Time.deltaTime;
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            rb.linearVelocity += Vector2.down * acceleration * Time.deltaTime;
         }
     }
 
@@ -52,18 +71,18 @@ public class FlyingSprite : MonoBehaviour
         }
 
         lateralVelocity = Vector2.ClampMagnitude(lateralVelocity, maxSpeed);
-        rb.velocity = new Vector2(lateralVelocity.x, rb.velocity.y);
+        rb.linearVelocity = new Vector2(lateralVelocity.x, rb.linearVelocity.y);
     }
 
     void OnCollisionStay2D(Collision2D collision)
     {
         foreach (ContactPoint2D contact in collision.contacts)
         {
-            if (contact.normal.x > 0.5f)  // Столкновение с левой стороны
+            if (contact.normal.x > 0.5f)  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             {
                 if (lateralVelocity.x < 0) lateralVelocity.x = 0;
             }
-            else if (contact.normal.x < -0.5f)  // Столкновение с правой стороны
+            else if (contact.normal.x < -0.5f)  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             {
                 if (lateralVelocity.x > 0) lateralVelocity.x = 0;
             }
@@ -72,7 +91,7 @@ public class FlyingSprite : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // При приземлении обнуляем боковую скорость
+        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (collision.gameObject.CompareTag("Ground"))
         {
             lateralVelocity = Vector2.zero;

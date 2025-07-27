@@ -1,0 +1,20 @@
+{
+    "asset": "cfc6fafae26cf7e41b4148b414e5f981",
+    "fileName": "0198463d-841a-795c-8b50-30107e369d8b.png",
+    "prompt": "Helicopter side view",
+    "negativePrompt": "",
+    "model": "b7750d5b-62a0-457a-b21e-82f4c2789df5",
+    "modelName": "Hyper Casual Mobile Characters",
+    "customSeed": -1,
+    "w3CTraceId": "658d1a029dee45154df986fd52634aea",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

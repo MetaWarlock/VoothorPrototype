@@ -6,7 +6,7 @@ public class Passenger : MonoBehaviour
     public float boardingSpeed = 1f;
     public float boardingRadius = 3f;
     private Vector3 destination;
-    private GameManager gameManager;
+
     private bool atExitPoint = false;
     private bool isBoarding = false;
     private Transform helicopter;
@@ -31,11 +31,6 @@ public class Passenger : MonoBehaviour
     public void SetDestination(Vector3 exitPoint)
     {
         destination = exitPoint;
-    }
-
-    public void SetGameManager(GameManager gm)
-    {
-        gameManager = gm;
     }
 
     private void MoveTowardsDestination()
@@ -80,8 +75,8 @@ public class Passenger : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, helicopter.position, boardingSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, helicopter.position) < 0.1f)
             {
-                // Óäàëèòå ïàññàæèðà èëè äîáàâüòå ëîãèêó ïîñàäêè
-                gameManager.PassengerExited();
+                // Ð£Ð´Ð°Ð»Ð¸Ñ‚Ðµ Ð¿Ð°ÑÑÐ°Ð¶Ð¸Ñ€Ð° Ð¸Ð»Ð¸ Ð´Ð¾Ð±Ð°Ð²ÑŒÑ‚Ðµ Ð»Ð¾Ð³Ð¸ÐºÑƒ Ð¿Ð¾ÑÐ°Ð´ÐºÐ¸
+                // The passenger has boarded. We can add scoring logic here later.
                 Destroy(gameObject);
             }
         }
