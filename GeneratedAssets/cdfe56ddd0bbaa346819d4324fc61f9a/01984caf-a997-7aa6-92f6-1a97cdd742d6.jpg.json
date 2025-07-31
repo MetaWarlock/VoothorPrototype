@@ -1,0 +1,20 @@
+{
+    "asset": "cdfe56ddd0bbaa346819d4324fc61f9a",
+    "fileName": "01984caf-a997-7aa6-92f6-1a97cdd742d6.jpg",
+    "prompt": "Fantasy sky",
+    "negativePrompt": "",
+    "model": "3087f054-adaa-4901-a3cc-da2081b03fc1",
+    "modelName": "Game Backgrounds (Flux)",
+    "customSeed": -1,
+    "w3CTraceId": "a3fd4fae9f95d0885e513c9532daf1ae",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

@@ -1,0 +1,20 @@
+{
+    "asset": "8075ddc89b03c444c993db5b4e4b1c3f",
+    "fileName": "01984ca7-57d9-738b-841a-49404216c39d.png",
+    "prompt": "Helicopter icon",
+    "negativePrompt": "",
+    "model": "63e0d07e-8325-4abf-960f-03a6fca8cc63",
+    "modelName": "Sticker Icons",
+    "customSeed": -1,
+    "w3CTraceId": "df42d0073292ee42528fe637991de834",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

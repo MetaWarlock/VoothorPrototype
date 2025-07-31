@@ -1,0 +1,20 @@
+{
+    "asset": "cdfe56ddd0bbaa346819d4324fc61f9a",
+    "fileName": "01984cad-5905-7e5a-be56-e20c853c4da1.jpg",
+    "prompt": "UI Health Bar",
+    "negativePrompt": "",
+    "model": "072fd6c7-1a92-4d41-b504-c46546b0dd28",
+    "modelName": "Game UI Essentials",
+    "customSeed": -1,
+    "w3CTraceId": "ee978d6b7a8cfe3711525e364fd54d1c",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

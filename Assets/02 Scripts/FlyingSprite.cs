@@ -82,21 +82,12 @@ public class FlyingSprite : MonoBehaviour
             {
                 if (lateralVelocity.x < 0) lateralVelocity.x = 0;
             }
-            else if (contact.normal.x < -0.5f)  // ������������ � ������ �������
-            {
-                if (lateralVelocity.x > 0) lateralVelocity.x = 0;
-            }
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        // ��� ����������� �������� ������� ��������
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            lateralVelocity = Vector2.zero;
-        }
-    }
+    // OnCollisionEnter2D() has been removed.
+    // Landing and collision logic is now handled in HelicopterHealthIntegration.cs
+    // to ensure correct execution order with damage calculation.
 
     public void OnMove(InputAction.CallbackContext context)
     {
