@@ -2475,11 +2475,15 @@ GameObject:
   - component: {fileID: 761287598}
   - component: {fileID: 761287601}
   - component: {fileID: 761287600}
-  - component: {fileID: 761287599}
   - component: {fileID: 761287602}
   - component: {fileID: 761287603}
   - component: {fileID: 761287605}
   - component: {fileID: 761287604}
+  - component: {fileID: 761287610}
+  - component: {fileID: 761287609}
+  - component: {fileID: 761287608}
+  - component: {fileID: 761287607}
+  - component: {fileID: 761287606}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2504,21 +2508,6 @@ Transform:
   - {fileID: 929360215}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &761287599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761287596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe54721dd59261e49a9ce4da3964ca50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSpeed: 20
-  acceleration: 20
-  lateralAcceleration: 5
 --- !u!50 &761287600
 Rigidbody2D:
   serializedVersion: 5
@@ -2619,7 +2608,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 761287599}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FlyingSprite, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
@@ -2695,7 +2684,7 @@ MonoBehaviour:
   minDamagePercent: 5
   maxDamagePercent: 50
   invincibilityTime: 1
-  showDebug: 1
+  showDebug: 0
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2708,6 +2697,117 @@ MonoBehaviour:
   onHealthRestored:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &761287606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761287596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f3ed25929dac94ab141a904931b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HelicopterTester
+  forceState: 0
+  applyForceState: 0
+  currentState: 0
+  previousState: 0
+  timeInCurrentState: 0
+  currentVelocity: {x: 0, y: 0}
+  inputVector: {x: 0, y: 0}
+  isGrounded: 0
+  isTouchingWall: 0
+  isInWater: 0
+  distanceToGround: 0
+  surfaceNormal: {x: 0, y: 0}
+  currentMaxSpeed: 0
+  currentAcceleration: 0
+  currentFriction: 0
+  helpText: 'HELICOPTER STATE TESTER
+
+
+    Keyboard Shortcuts:
+
+    1 - Force Flying
+    State
+
+    2 - Force Grounded State
+
+    3 - Force Wall Contact State
+
+    4
+    - Force Sliding State
+
+    5 - Force In Water State
+
+
+    Inspector Controls:
+
+    -
+    Set Force State dropdown
+
+    - Click Apply Force State
+
+
+    Watch Console for
+    state transition logs!'
+--- !u!114 &761287607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761287596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50e908991467ad04b831beb0683bcea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HelicopterCollisionDetector
+  debugIsGrounded: 0
+  debugIsTouchingWall: 0
+  debugIsInWater: 0
+  debugDistanceToGround: 0
+--- !u!114 &761287608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761287596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c67f2022872974da5dff29cccd74f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HelicopterPhysics
+  debugCurrentVelocity: {x: 0, y: 0}
+  debugCurrentFriction: 0
+--- !u!114 &761287609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761287596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c96cda0b843750845a3278c2db4d87c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HelicopterStateManager
+  debugCurrentState: 0
+--- !u!114 &761287610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761287596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1426d01ef43a7fd428084bdca23de7c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HelicopterController
+  settings: {fileID: 0}
 --- !u!1 &761825655
 GameObject:
   m_ObjectHideFlags: 0
@@ -3131,7 +3231,6 @@ MonoBehaviour:
   - Ground
   - Wall
   - Obstacle
-  waterCausesDamage: 1
   damageFrequency: 0.5
 --- !u!61 &929360217
 BoxCollider2D:

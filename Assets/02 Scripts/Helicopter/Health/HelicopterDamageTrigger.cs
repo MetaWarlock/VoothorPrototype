@@ -15,11 +15,8 @@ public class HelicopterDamageTrigger : MonoBehaviour
     public Rigidbody2D helicopterRigidbody;
     
     [Header("Damage Settings")]
-    [Tooltip("Tags that can cause damage")]
+    [Tooltip("Tags that can cause damage (Water is always safe zone)")]
     public string[] damageableTags = { "Ground", "Wall", "Obstacle" };
-    
-    [Tooltip("Whether water causes damage")]
-    public bool waterCausesDamage = true;
     
     [Header("Timing")]
     [Tooltip("Minimum time between damage applications")]
@@ -91,17 +88,6 @@ public class HelicopterDamageTrigger : MonoBehaviour
         if (damageDealt > 0f)
         {
             lastDamageTime = Time.time;
-            
-            if (healthManager.showDebug)
-            {
-                Debug.Log($"[TRIGGER DAMAGE] Helicopter hit {other.gameObject.name}: " +
-                         $"Speed: {totalSpeed:F2}, Damage: {damageDealt:F1}");
-            }
-        }
-        else if (healthManager.showDebug && totalSpeed > 0.1f)
-        {
-            Debug.Log($"[TRIGGER DAMAGE] No damage from {other.gameObject.name}: " +
-                     $"Speed: {totalSpeed:F2} below threshold");
         }
     }
     
@@ -121,10 +107,10 @@ public class HelicopterDamageTrigger : MonoBehaviour
             }
         }
         
-        // Special case for water
-        if (obj.CompareTag("Water") && waterCausesDamage)
+        // Water is always a safe zone - no damage
+        if (obj.CompareTag("Water"))
         {
-            return true;
+            return false;
         }
         
         return false;

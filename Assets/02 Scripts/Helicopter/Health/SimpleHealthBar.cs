@@ -54,7 +54,7 @@ public class SimpleHealthBar : MonoBehaviour
             SetFillWidth(currentWidth);
         }
         
-        Debug.Log("[SimpleHealthBar] Инициализирован с максимальной шириной: " + maxWidth);
+        // SimpleHealthBar initialized silently
     }
     
     void Update()
@@ -103,10 +103,7 @@ public class SimpleHealthBar : MonoBehaviour
             SetFillWidth(currentWidth);
         }
         
-        if (showDebugLogs)
-        {
-            Debug.Log($"[SimpleHealthBar] Здоровье: {currentHealth:F1}/{maxHealth:F1} ({healthPercent:P0}) -> Ширина: {targetWidth:F1}px");
-        }
+        // Health bar updated silently
     }
     
     /// <summary>

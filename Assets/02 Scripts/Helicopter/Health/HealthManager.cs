@@ -86,10 +86,6 @@ public class HealthManager : MonoBehaviour
             if (invincibilityTimer <= 0f)
             {
                 isInvincible = false;
-                if (showDebug)
-                {
-                    Debug.Log($"{name}: Invincibility ended");
-                }
             }
         }
     }
@@ -223,17 +219,8 @@ public class HealthManager : MonoBehaviour
     /// </summary>
     private float CalculateDamagePercent(float speed)
     {
-        if (showDebug)
-        {
-            Debug.Log($"[DAMAGE CALC] Checking speed: {speed:F2} against minDamageSpeed: {minDamageSpeed:F2}");
-        }
-
         if (speed < minDamageSpeed)
         {
-            if (showDebug && speed > 0.1f)
-            {
-                Debug.Log("[DAMAGE CALC] Speed is too low, no damage.");
-            }
             return 0f;
         }
         
@@ -253,10 +240,7 @@ public class HealthManager : MonoBehaviour
         isInvincible = true;
         invincibilityTimer = invincibilityTime;
         
-        if (showDebug)
-        {
-            Debug.Log($"{name}: Started invincibility for {invincibilityTime}s");
-        }
+        // Invincibility started silently
     }
     
     /// <summary>

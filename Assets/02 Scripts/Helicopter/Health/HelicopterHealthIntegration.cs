@@ -44,7 +44,6 @@ public class HelicopterHealthIntegration : MonoBehaviour
     private Rigidbody2D rb;
     
     // State
-    private float lastDamageTime = 0f;
     private Color originalColor;
     private bool isFlashing = false;
     private float flashTimer = 0f;
@@ -175,10 +174,10 @@ public class HelicopterHealthIntegration : MonoBehaviour
         }
         
         // Disable helicopter control
-        var flyingSprite = GetComponent<FlyingSprite>();
-        if (flyingSprite != null)
+        var helicopterController = GetComponent<HelicopterController>();
+        if (helicopterController != null)
         {
-            flyingSprite.enabled = false;
+            helicopterController.enabled = false;
         }
         
         // Stop all propeller rotation

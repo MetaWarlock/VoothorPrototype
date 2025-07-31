@@ -17,33 +17,40 @@ public class PropellerRotation : MonoBehaviour
     public bool rotateClockwise = true;
 
     private float currentRotationSpeed = 0f;
-    private FlyingSprite flyingSprite;
+    private HelicopterController helicopterController;
 
     private void Start()
     {
-        flyingSprite = GetComponentInParent<FlyingSprite>();
+        helicopterController = GetComponentInParent<HelicopterController>();
+        if (helicopterController == null)
+        {
+            Debug.LogError($"[PropellerRotation] HelicopterController not found on parent of {gameObject.name}!");
+        }
     }
 
     private void Update()
     {
-        if (flyingSprite == null) return;
+        if (helicopterController == null) return;
 
+        // Get current input from helicopter controller
+        Vector2 currentInput = helicopterController.GetCurrentInput();
+        
         // Get target speed based on input
         float targetSpeed = 0f;
         
-        if (propellerType == PropellerType.Top && flyingSprite.VerticalInput != 0)
+        if (propellerType == PropellerType.Top && Mathf.Abs(currentInput.y) > 0.01f)
         {
-            targetSpeed = maxRotationSpeed * Mathf.Abs(flyingSprite.VerticalInput);
+            targetSpeed = maxRotationSpeed * Mathf.Abs(currentInput.y);
         }
-        else if (propellerType == PropellerType.Back && flyingSprite.HorizontalInput != 0)
+        else if (propellerType == PropellerType.Back && Mathf.Abs(currentInput.x) > 0.01f)
         {
             // Flip rotation direction based on movement direction for back propeller
-            if (flyingSprite.HorizontalInput > 0 && !rotateClockwise || 
-                flyingSprite.HorizontalInput < 0 && rotateClockwise)
+            if (currentInput.x > 0 && !rotateClockwise || 
+                currentInput.x < 0 && rotateClockwise)
             {
                 rotateClockwise = !rotateClockwise;
             }
-            targetSpeed = maxRotationSpeed * Mathf.Abs(flyingSprite.HorizontalInput);
+            targetSpeed = maxRotationSpeed * Mathf.Abs(currentInput.x);
         }
 
         // Smoothly adjust current rotation speed

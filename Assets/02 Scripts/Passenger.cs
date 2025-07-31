@@ -48,6 +48,9 @@ public class Passenger : MonoBehaviour
         RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, boardingRadius);
         RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, boardingRadius);
 
+        // TODO: Reimplement passenger boarding system with new helicopter architecture
+        // This code is temporarily disabled during helicopter system refactoring
+        /*
         if (hitRight.collider != null && hitRight.collider.CompareTag(PlayerTag))
         {
             Helicopter helicopterScript = hitRight.collider.GetComponent<Helicopter>();
@@ -66,6 +69,7 @@ public class Passenger : MonoBehaviour
                 helicopter = hitLeft.collider.transform;
             }
         }
+        */
     }
 
     private void MoveTowardsHelicopter()
