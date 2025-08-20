@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Main helicopter controller that coordinates all helicopter systems.
@@ -78,8 +79,7 @@ public class HelicopterController : MonoBehaviour
     private void UpdateSystems()
     {
         // 1. Get input
-        UpdateInput();
-        
+        // Input is handled via OnMove callback from Unity Input System
         // 2. Update collision detection
         if (collisionDetector != null)
         {
@@ -98,18 +98,21 @@ public class HelicopterController : MonoBehaviour
             physics.UpdatePhysics(inputVector, stateManager.CurrentState, stateManager.CurrentStateData);
         }
     }
-    
+
     /// <summary>
-    /// Update input from Unity Input System
+    /// Handle input from Unity Input System (called by Unity Events)
+    /// This maintains compatibility with mobile gamepad and Input System
     /// </summary>
-    private void UpdateInput()
+    public void OnMove(InputAction.CallbackContext context)
     {
-        // Get input from Unity's Input System
-        // This will be replaced with actual input when integrated
-        inputVector = new Vector2(
-            Input.GetAxis("Horizontal"),
-            Input.GetAxis("Vertical")
-        );
+        // Read input value from Unity Input System
+        inputVector = context.ReadValue<Vector2>();
+        
+        // Debug logging for input tracking (can be disabled in production)
+        if (settings != null && settings.showDebug)
+        {
+            Debug.Log($"[HelicopterController] Input: {inputVector}");
+        }
     }
     
     /// <summary>
@@ -132,8 +135,7 @@ public class HelicopterController : MonoBehaviour
             accelerationMultiplier = 1f,
             frictionCoefficient = 0.02f,
             allowVerticalThrust = true,
-            allowHorizontalThrust = true,
-            buoyancy = 0f
+            allowHorizontalThrust = true
         };
         
         // Grounded state (high friction, limited movement)
@@ -143,55 +145,23 @@ public class HelicopterController : MonoBehaviour
             accelerationMultiplier = 0.3f,
             frictionCoefficient = 0.8f,
             allowVerticalThrust = true,
-            allowHorizontalThrust = false,
-            buoyancy = 0f
+            allowHorizontalThrust = false
         };
         
-        // Wall contact state
-        defaultSettings.wallContact = new StateParameters
-        {
-            maxSpeedMultiplier = 1f,
-            accelerationMultiplier = 1f,
-            frictionCoefficient = 0.1f,
-            allowVerticalThrust = true,
-            allowHorizontalThrust = true,
-            buoyancy = 0f
-        };
         
-        // Sliding state
-        defaultSettings.sliding = new StateParameters
-        {
-            maxSpeedMultiplier = 0.6f,
-            accelerationMultiplier = 0.5f,
-            frictionCoefficient = 0.6f,
-            allowVerticalThrust = true,
-            allowHorizontalThrust = true,
-            buoyancy = 0f
-        };
         
-        // In water state (safe zone with special physics)
-        defaultSettings.inWater = new StateParameters
-        {
-            maxSpeedMultiplier = 0.6f,
-            accelerationMultiplier = 0.4f,
-            frictionCoefficient = 0.7f,
-            allowVerticalThrust = true,
-            allowHorizontalThrust = true,
-            buoyancy = 0.2f // Upward force in water
-        };
+        
         
         // Collision detection settings
         defaultSettings.raycastDistance = 0.6f;
         defaultSettings.raycastCount = 3;
-        defaultSettings.minimumStickPreventionSpeed = 0.1f;
-        defaultSettings.slidingToGroundedThreshold = 0.1f;
-        defaultSettings.wallContactTimeout = 0.5f;
+        
         
         // Debug settings
-        defaultSettings.showDebug = true;
-        defaultSettings.showRaycastGizmos = true;
+        defaultSettings.showDebug = false;
+        defaultSettings.showRaycastGizmos = false;
         
-        Debug.Log("[HelicopterController] Created default settings");
+
         return defaultSettings;
     }
     

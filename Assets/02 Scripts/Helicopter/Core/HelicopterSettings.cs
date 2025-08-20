@@ -39,33 +39,8 @@ public class HelicopterSettings : ScriptableObject
         allowHorizontalThrust = false
     };
     
-    public StateParameters wallContact = new StateParameters
-    {
-        maxSpeedMultiplier = 1f,
-        accelerationMultiplier = 1f,
-        frictionCoefficient = 0.1f,
-        allowVerticalThrust = true,
-        allowHorizontalThrust = true
-    };
-    
-    public StateParameters sliding = new StateParameters
-    {
-        maxSpeedMultiplier = 0.6f,
-        accelerationMultiplier = 0.5f,
-        frictionCoefficient = 0.6f,
-        allowVerticalThrust = true,
-        allowHorizontalThrust = true
-    };
-    
-    public StateParameters inWater = new StateParameters
-    {
-        maxSpeedMultiplier = 0.6f,
-        accelerationMultiplier = 0.4f,
-        frictionCoefficient = 0.7f,
-        allowVerticalThrust = true,
-        allowHorizontalThrust = true,
-        buoyancy = 0.2f
-    };
+
+
     
     [Header("Collision Detection")]
     [Tooltip("Distance for raycast collision detection")]
@@ -74,15 +49,7 @@ public class HelicopterSettings : ScriptableObject
     [Tooltip("Number of raycasts per direction (more = better accuracy)")]
     public int raycastCount = 3;
     
-    [Tooltip("Minimum speed to consider for wall sticking prevention")]
-    public float minimumStickPreventionSpeed = 0.1f;
-    
-    [Header("State Transition")]
-    [Tooltip("Minimum speed to transition from Sliding to Grounded")]
-    public float slidingToGroundedThreshold = 0.1f;
-    
-    [Tooltip("Time before transitioning from WallContact to Flying")]
-    public float wallContactTimeout = 0.5f;
+
     
     [Header("Debug")]
     [Tooltip("Show debug information and gizmos")]
@@ -116,9 +83,7 @@ public class StateParameters
     [Tooltip("Allow horizontal thrust in this state")]
     public bool allowHorizontalThrust = true;
     
-    [Tooltip("Buoyancy force (only used in water)")]
-    [Range(0f, 1f)]
-    public float buoyancy = 0f;
+
     
     /// <summary>
     /// Get effective horizontal max speed based on settings and multiplier

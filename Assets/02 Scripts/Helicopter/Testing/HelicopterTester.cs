@@ -24,8 +24,8 @@ public class HelicopterTester : MonoBehaviour
     [Header("Collision Status (Read Only)")]
     [Space(10)]
     [SerializeField] private bool isGrounded;
-    [SerializeField] private bool isTouchingWall;
-    [SerializeField] private bool isInWater;
+
+
     [SerializeField] private float distanceToGround;
     [SerializeField] private Vector2 surfaceNormal;
     
@@ -51,14 +51,14 @@ public class HelicopterTester : MonoBehaviour
         
         // Subscribe to events
         HelicopterEvents.OnStateChanged.AddListener(OnStateChanged);
-        HelicopterEvents.OnWaterStateChanged.AddListener(OnWaterStateChanged);
+        
     }
     
     void OnDestroy()
     {
         // Unsubscribe from events
         HelicopterEvents.OnStateChanged.RemoveListener(OnStateChanged);
-        HelicopterEvents.OnWaterStateChanged.RemoveListener(OnWaterStateChanged);
+        
     }
     
     void Update()
@@ -83,8 +83,7 @@ public class HelicopterTester : MonoBehaviour
             timeInCurrentState = stateData.timeInCurrentState;
             
             isGrounded = stateData.isGrounded;
-            isTouchingWall = stateData.isTouchingWall;
-            isInWater = stateData.isInWater;
+            
             surfaceNormal = stateData.surfaceNormal;
             distanceToGround = stateData.distanceToGround;
         }
@@ -135,18 +134,7 @@ public class HelicopterTester : MonoBehaviour
         {
             ForceStateByKey(HelicopterState.Grounded);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ForceStateByKey(HelicopterState.WallContact);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ForceStateByKey(HelicopterState.Sliding);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            ForceStateByKey(HelicopterState.InWater);
-        }
+
     }
     
     /// <summary>
@@ -157,7 +145,6 @@ public class HelicopterTester : MonoBehaviour
         if (stateManager != null)
         {
             stateManager.ForceState(state);
-            Debug.Log("[HelicopterTester] Keyboard forced state to: " + state);
         }
     }
     
@@ -166,41 +153,16 @@ public class HelicopterTester : MonoBehaviour
     /// </summary>
     private void OnStateChanged(HelicopterState newState, HelicopterState previousState)
     {
-        Debug.Log("[HelicopterTester] State changed: " + previousState + " -> " + newState);
-        
         // Log state-specific information
         switch (newState)
         {
             case HelicopterState.Flying:
-                Debug.Log("  Flying: Full control, low friction");
+
                 break;
             case HelicopterState.Grounded:
-                Debug.Log("  Grounded: High friction, vertical thrust only");
+
                 break;
-            case HelicopterState.WallContact:
-                Debug.Log("  Wall Contact: Preventing sticking");
-                break;
-            case HelicopterState.Sliding:
-                Debug.Log("  Sliding: Medium friction, slowing down");
-                break;
-            case HelicopterState.InWater:
-                Debug.Log("  In Water: SAFE ZONE - No damage, buoyancy active");
-                break;
-        }
-    }
-    
-    /// <summary>
-    /// Handle water state change events
-    /// </summary>
-    private void OnWaterStateChanged(bool inWater)
-    {
-        if (inWater)
-        {
-            Debug.Log("[HelicopterTester] ENTERED WATER - Safe zone activated!");
-        }
-        else
-        {
-            Debug.Log("[HelicopterTester] EXITED WATER - Back to normal physics");
+
         }
     }
     
@@ -215,9 +177,7 @@ public class HelicopterTester : MonoBehaviour
         "Keyboard Shortcuts:\n" +
         "1 - Force Flying State\n" +
         "2 - Force Grounded State\n" +
-        "3 - Force Wall Contact State\n" +
-        "4 - Force Sliding State\n" +
-        "5 - Force In Water State\n\n" +
+
         "Inspector Controls:\n" +
         "- Set Force State dropdown\n" +
         "- Click Apply Force State\n\n" +

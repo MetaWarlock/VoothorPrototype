@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+        "**/*.meta": true,            // Unity .meta файлы    
+        "**/*.csproj": true,          // C# project files
+        "**/*.unityproj": true,       // старые Unity проекты
+        "**/*.sln": true,             // solution-файлы
+        "**/Library": true,           // папка Unity
+        "**/Temp": true,              // временные файлы
+        "**/obj": true,               // бинарные сборки
+        "**/Build": true              // сборки проекта
+    }
+}

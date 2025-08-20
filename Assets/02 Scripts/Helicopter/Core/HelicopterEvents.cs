@@ -7,10 +7,7 @@ using UnityEngine.Events;
 public enum HelicopterState
 {
     Flying,      // In air - full control
-    Grounded,    // On ground - high friction, limited thrust
-    WallContact, // Touching wall - prevent sticking
-    Sliding,     // Sliding on surface - increased friction
-    InWater      // In water - safe zone with altered physics
+    Grounded     // On ground - high friction, limited thrust
 }
 
 /// <summary>
@@ -24,8 +21,6 @@ public class HelicopterStateData
     public float timeInCurrentState;
     public Vector2 surfaceNormal;
     public bool isGrounded;
-    public bool isTouchingWall;
-    public bool isInWater;
     public float distanceToGround;
     
     public HelicopterStateData()
@@ -35,8 +30,7 @@ public class HelicopterStateData
         timeInCurrentState = 0f;
         surfaceNormal = Vector2.up;
         isGrounded = false;
-        isTouchingWall = false;
-        isInWater = false;
+
         distanceToGround = float.MaxValue;
     }
 }
@@ -50,8 +44,7 @@ public class HelicopterStateEvent : UnityEvent<HelicopterState, HelicopterState>
 [System.Serializable]
 public class HelicopterCollisionEvent : UnityEvent<Vector2, ContactPoint2D[]> { }
 
-[System.Serializable]
-public class HelicopterWaterEvent : UnityEvent<bool> { }
+
 
 /// <summary>
 /// Centralized event system for helicopter
@@ -68,10 +61,7 @@ public static class HelicopterEvents
     /// </summary>
     public static HelicopterCollisionEvent OnCollision = new HelicopterCollisionEvent();
     
-    /// <summary>
-    /// Fired when helicopter enters/exits water (isInWater)
-    /// </summary>
-    public static HelicopterWaterEvent OnWaterStateChanged = new HelicopterWaterEvent();
+
     
     /// <summary>
     /// Clear all event listeners (useful for cleanup)
@@ -80,7 +70,6 @@ public static class HelicopterEvents
     {
         OnStateChanged.RemoveAllListeners();
         OnCollision.RemoveAllListeners();
-        OnWaterStateChanged.RemoveAllListeners();
     }
 }
 
@@ -110,8 +99,7 @@ public interface IHelicopterCollisionSystem
     void Initialize(HelicopterSettings settings);
     void UpdateDetection();
     bool IsGrounded { get; }
-    bool IsTouchingWall { get; }
-    bool IsInWater { get; }
+
     Vector2 GroundNormal { get; }
     float DistanceToGround { get; }
 }

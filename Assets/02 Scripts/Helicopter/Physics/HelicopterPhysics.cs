@@ -78,9 +78,6 @@ public class HelicopterPhysics : MonoBehaviour, IHelicopterPhysicsSystem
         // Apply friction based on current state
         ApplyFriction(input, stateParams);
         
-        // Apply special effects (gravity, buoyancy, etc.)
-        ApplySpecialEffects(currentState, stateParams, stateData);
-        
         // Update debug display
         UpdateDebugInfo();
     }
@@ -94,9 +91,6 @@ public class HelicopterPhysics : MonoBehaviour, IHelicopterPhysicsSystem
         {
             HelicopterState.Flying => settings.flying,
             HelicopterState.Grounded => settings.grounded,
-            HelicopterState.WallContact => settings.wallContact,
-            HelicopterState.Sliding => settings.sliding,
-            HelicopterState.InWater => settings.inWater,
             _ => settings.flying
         };
     }
@@ -132,27 +126,7 @@ public class HelicopterPhysics : MonoBehaviour, IHelicopterPhysicsSystem
         // Horizontal thrust
         if (stateParams.allowHorizontalThrust && Mathf.Abs(input.x) > 0.01f)
         {
-            // Check for wall contact blocking
-            if (stateData.currentState == HelicopterState.WallContact)
-            {
-                // Don't apply thrust towards the wall
-                Vector2 wallNormal = stateData.surfaceNormal;
-                float thrustDotWall = Vector2.Dot(Vector2.right * input.x, wallNormal);
-                
-                if (thrustDotWall < 0) // Thrust is towards wall
-                {
-                    // Block horizontal thrust towards wall
-                    thrustForce.x = 0;
-                }
-                else
-                {
-                    thrustForce.x = input.x * currentHorizontalAcceleration;
-                }
-            }
-            else
-            {
-                thrustForce.x = input.x * currentHorizontalAcceleration;
-            }
+            thrustForce.x = input.x * currentHorizontalAcceleration;
         }
         
         // Apply thrust force
@@ -197,8 +171,8 @@ public class HelicopterPhysics : MonoBehaviour, IHelicopterPhysicsSystem
             // 3. In special states that need vertical friction
             bool applyVerticalFriction = rb.linearVelocity.y > 0.01f ||  // Moving up
                                        Mathf.Abs(input.y) > 0.01f ||  // Have vertical input
-                                       stateParams == settings.grounded ||   // Grounded state
-                                       stateParams == settings.inWater;      // In water
+                                       stateParams == settings.grounded;   // Grounded state
+    
             
             if (applyVerticalFriction)
             {
@@ -216,26 +190,7 @@ public class HelicopterPhysics : MonoBehaviour, IHelicopterPhysicsSystem
         }
     }
     
-    /// <summary>
-    /// Apply special effects like buoyancy in water
-    /// </summary>
-    private void ApplySpecialEffects(HelicopterState currentState, StateParameters stateParams, HelicopterStateData stateData)
-    {
-        // Apply buoyancy in water
-        if (currentState == HelicopterState.InWater && stateParams.buoyancy > 0f)
-        {
-            Vector2 buoyancyForce = Vector2.up * stateParams.buoyancy;
-            rb.linearVelocity += buoyancyForce * Time.fixedDeltaTime;
-        }
-        
-        // Apply separation force if stuck in wall
-        if (currentState == HelicopterState.WallContact && stateData.surfaceNormal != Vector2.zero)
-        {
-            // Small force to prevent sticking
-            Vector2 separationForce = stateData.surfaceNormal * 0.1f;
-            rb.linearVelocity += separationForce * Time.fixedDeltaTime;
-        }
-    }
+    
     
     /// <summary>
     /// Update debug information displayed in inspector
